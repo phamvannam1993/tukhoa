@@ -11,6 +11,10 @@ const PAGE_ICONS: Record<string, string> = {
   'goi-y-tu-khoa-shopee': '🛍️',
   'phan-loai-search-intent': '🎯',
   'nhom-tu-khoa': '🧩',
+  'gom-nhom-tu-khoa-hang-loat': '🗂️',
+  'ban-do-tu-khoa': '🌳',
+  'ke-hoach-noi-dung': '🗺️',
+  'cau-hoi-tu-khoa': '❓',
 };
 
 const HOME_STEPS = [

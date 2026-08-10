@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { KeywordTool } from '../../components/KeywordTool';
+import { QuestionTool } from '../../components/QuestionTool';
+import { SeoWorkbench } from '../../components/SeoWorkbench';
 import { getSeoPage, SEO_PAGES } from '../../lib/seo-pages';
 import { SITE_NAME, SITE_URL } from '../../lib/site';
 
@@ -136,7 +138,17 @@ export default async function SeoToolPage({ params }: PageProps) {
         </div>
       </section>
 
-      <KeywordTool defaultSources={page.defaultSources} />
+      {page.tool === 'questions' ? (
+        <QuestionTool />
+      ) : page.tool === 'cluster' || page.tool === 'universe' || page.tool === 'plan' ? (
+        <SeoWorkbench
+          initialTab={
+            page.tool === 'universe' ? 'universe' : page.tool === 'plan' ? 'plan' : 'clusters'
+          }
+        />
+      ) : (
+        <KeywordTool defaultSources={page.defaultSources} />
+      )}
 
       <section className="container contentSection">
         <div>

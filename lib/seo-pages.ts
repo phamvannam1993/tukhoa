@@ -24,6 +24,11 @@ export interface SeoPage {
   related: string[];
   faq: Array<{ question: string; answer: string }>;
   defaultSources: Array<'google' | 'youtube' | 'tiktok' | 'shopee'>;
+  /**
+   * Công cụ hiển thị trên trang. Mặc định `keyword` là bộ mở rộng từ khóa cũ;
+   * `cluster` / `universe` / `plan` dùng chung workbench nhưng mở sẵn tab tương ứng.
+   */
+  tool?: 'keyword' | 'cluster' | 'universe' | 'plan' | 'questions';
 }
 
 export const SEO_PAGES: SeoPage[] = [
@@ -424,6 +429,231 @@ export const SEO_PAGES: SeoPage[] = [
       },
     ],
     defaultSources: ['google', 'youtube'],
+  },
+  {
+    slug: 'gom-nhom-tu-khoa-hang-loat',
+    title: 'Gom nhóm từ khóa hàng loạt (Keyword Clustering) – dán 10.000 từ khóa',
+    description:
+      'Dán tới 10.000 từ khóa, công cụ tự gom thành cụm chủ đề, gán search intent và gợi ý loại trang nên tạo. Miễn phí, xử lý ngay trong trình duyệt, xuất CSV.',
+    eyebrow: 'CLUSTERING HÀNG LOẠT',
+    heading: 'Gom nhóm từ khóa hàng loạt',
+    intro:
+      'Dán danh sách từ khóa xuất từ Search Console, Ahrefs hay Keyword Planner. Công cụ gom thành cụm chủ đề, gán ý định tìm kiếm và cho biết mỗi cụm nên là bài viết, danh mục hay trang sản phẩm.',
+    platform: 'all',
+    keywords: [
+      'gom nhóm từ khóa',
+      'keyword clustering tiếng việt',
+      'công cụ gom cụm từ khóa miễn phí',
+      'phân nhóm từ khóa hàng loạt',
+      'keyword grouping tool',
+    ],
+    bullets: [
+      'Xử lý tới 10.000 từ khóa ngay trong trình duyệt, không gửi dữ liệu lên máy chủ.',
+      'Gom cụm theo trọng số IDF nên head term luôn là tên cụm.',
+      'Mỗi cụm có sẵn search intent và loại trang nên tạo.',
+      'Xuất CSV và chuyển thẳng sang content brief.',
+    ],
+    useCases: [
+      'Dọn danh sách vài nghìn từ khóa thành bản đồ trang rõ ràng.',
+      'Phát hiện các nhóm từ khóa đang bị nhiều bài viết tranh nhau.',
+      'Chuẩn bị cấu trúc site trước khi viết nội dung.',
+    ],
+    steps: [
+      { title: 'Dán danh sách', detail: 'Mỗi dòng một từ khóa, hoặc bấm “Lấy tự động” từ một từ khóa gốc.' },
+      { title: 'Bấm phân tích', detail: 'Công cụ loại trùng, gom cụm và gán ý định trong vài giây.' },
+      { title: 'Rà lại từng cụm', detail: 'Gộp hoặc tách cụm theo hiểu biết thực tế về ngành của bạn.' },
+      { title: 'Xuất CSV / tạo brief', detail: 'Mỗi cụm là một trang; bấm “Tạo content brief” để có dàn ý.' },
+    ],
+    body: [
+      'Khi danh sách từ khóa vượt vài trăm dòng, việc gom nhóm thủ công trở nên bất khả thi. Công cụ này so sánh từ khóa theo token có trọng số IDF: các từ hiếm (tên thương hiệu, địa danh, model) có sức nặng lớn hơn những từ xuất hiện ở mọi truy vấn, nhờ vậy “máy lọc nước karofi” và “máy lọc nước kangaroo” không bị gộp làm một.',
+      'Mỗi cụm được đặt tên bằng từ khóa ngắn nhất trong cụm — thường chính là head term bạn muốn nhắm. Ý định tìm kiếm của cụm lấy theo đa số các từ khóa thành viên, từ đó suy ra loại trang phù hợp: bài viết, bài so sánh, danh mục hay trang sản phẩm.',
+      'Toàn bộ tính toán chạy trong trình duyệt. Danh sách từ khóa của bạn — thứ thường là tài sản của dự án — không rời khỏi máy.',
+    ],
+    related: ['ban-do-tu-khoa', 'ke-hoach-noi-dung', 'phan-loai-search-intent'],
+    faq: [
+      {
+        question: 'Tối đa bao nhiêu từ khóa?',
+        answer: '10.000 từ khóa mỗi lần. Từ khóa trùng sẽ tự động bị loại và được báo lại số lượng.',
+      },
+      {
+        question: 'Dữ liệu có được gửi lên máy chủ không?',
+        answer:
+          'Không. Việc gom cụm chạy hoàn toàn trong trình duyệt. Chỉ khi bạn bấm “Lấy tự động” thì từ khóa gốc mới được gửi tới API gợi ý.',
+      },
+      {
+        question: 'Vì sao một cụm bị tách/gộp chưa đúng ý?',
+        answer:
+          'Thuật toán dựa trên độ tương đồng ngôn ngữ, không đọc SERP. Với chủ đề quan trọng, hãy kiểm tra kết quả tìm kiếm thực tế rồi gộp/tách lại thủ công.',
+      },
+    ],
+    defaultSources: ['google', 'youtube'],
+    tool: 'cluster',
+  },
+  {
+    slug: 'ban-do-tu-khoa',
+    title: 'Keyword Universe – bản đồ cây chủ đề từ khóa tiếng Việt',
+    description:
+      'Biến danh sách từ khóa thành cây chủ đề nhiều tầng để thấy ngay website cần viết những nhóm nội dung nào. Miễn phí, không cần đăng nhập.',
+    eyebrow: 'KEYWORD UNIVERSE',
+    heading: 'Bản đồ cây chủ đề từ khóa',
+    intro:
+      'Nhập một chủ đề rộng, công cụ dựng cây phân nhánh theo các từ bổ nghĩa phổ biến nhất — bạn nhìn một lần là biết website cần bao phủ những nhánh nội dung nào.',
+    platform: 'all',
+    keywords: [
+      'keyword universe',
+      'bản đồ từ khóa',
+      'cây chủ đề seo',
+      'content map từ khóa',
+      'sơ đồ từ khóa tiếng việt',
+    ],
+    bullets: [
+      'Cây chủ đề 2 tầng dựng tự động từ danh sách từ khóa.',
+      'Tự loại phần lõi lặp lại để chỉ còn các nhánh khác biệt.',
+      'Đếm số từ khóa mỗi nhánh để biết nhánh nào đáng đầu tư trước.',
+    ],
+    useCases: [
+      'Lập content map cho website mới.',
+      'Tìm nhánh chủ đề còn thiếu so với đối thủ.',
+      'Trình bày kế hoạch nội dung cho khách hàng, cấp trên.',
+    ],
+    steps: [
+      { title: 'Nhập chủ đề gốc', detail: 'Ví dụ “du lịch”, “máy lọc nước”, “học tiếng Anh”.' },
+      { title: 'Lấy hoặc dán từ khóa', detail: 'Bấm “Lấy tự động” hoặc dán danh sách có sẵn.' },
+      { title: 'Mở tab Cây chủ đề', detail: 'Bung từng nhánh để xem nhóm con và các từ khóa thuộc nhánh.' },
+      { title: 'Chốt nhánh ưu tiên', detail: 'Nhánh nhiều từ khóa và intent thương mại nên làm trước.' },
+    ],
+    body: [
+      'Danh sách phẳng hàng nghìn dòng rất khó ra quyết định. Cây chủ đề trả lời trực tiếp câu hỏi “website của tôi cần viết những chủ đề nào?” bằng cách nhóm từ khóa theo các từ bổ nghĩa xuất hiện nhiều nhất, sau khi đã loại bỏ phần lõi mà gần như từ khóa nào cũng chứa.',
+      'Ví dụ với chủ đề “du lịch”, phần lõi “du lịch” bị loại, còn lại các nhánh như “đà nẵng”, “nha trang”, “kinh nghiệm”, “chi phí” — mỗi nhánh là một cụm nội dung có thể phát triển thành nhiều bài.',
+      'Số đếm cạnh mỗi nhánh cho biết độ dày nhu cầu. Nhánh dày mà site bạn chưa có bài nào chính là khoảng trống nội dung đáng lấp trước.',
+    ],
+    related: ['gom-nhom-tu-khoa-hang-loat', 'ke-hoach-noi-dung', 'cong-cu-nghien-cuu-tu-khoa'],
+    faq: [
+      {
+        question: 'Cây chủ đề khác gì gom cụm?',
+        answer:
+          'Gom cụm cho biết từ khóa nào nên nằm chung một trang. Cây chủ đề cho biết toàn bộ chủ đề chia thành những nhánh lớn nào — dùng để dựng cấu trúc site.',
+      },
+      {
+        question: 'Cây có bao nhiêu tầng?',
+        answer: 'Hai tầng nhánh dưới gốc. Đủ để dựng cấu trúc chuyên mục mà không rối mắt.',
+      },
+    ],
+    defaultSources: ['google', 'youtube'],
+    tool: 'universe',
+  },
+  {
+    slug: 'ke-hoach-noi-dung',
+    title: 'Lập kế hoạch nội dung SEO từ từ khóa – Pillar & Cluster tự động',
+    description:
+      'Từ một từ khóa gốc, tạo ngay kế hoạch nội dung theo mô hình pillar – cluster: tiêu đề đề xuất, loại trang, search intent và content brief chi tiết cho từng bài.',
+    eyebrow: 'CONTENT PLAN',
+    heading: 'Kế hoạch nội dung & content brief',
+    intro:
+      'Biến danh sách từ khóa thành kế hoạch triển khai: một trang trụ cột, các bài cluster xoay quanh, kèm tiêu đề, loại trang và dàn ý H2/H3 tải về dạng Markdown.',
+    platform: 'all',
+    keywords: [
+      'kế hoạch nội dung seo',
+      'content plan từ khóa',
+      'pillar cluster',
+      'content brief tiếng việt',
+      'lập dàn ý bài seo',
+    ],
+    bullets: [
+      'Sinh sơ đồ pillar – cluster từ danh sách từ khóa.',
+      'Mỗi bài có tiêu đề, meta description, H1 và dàn ý H2/H3 gợi ý.',
+      'Có sẵn từ khóa phụ, câu hỏi FAQ, entity và internal link nên đặt.',
+      'Tải content brief dạng Markdown để đưa thẳng cho người viết.',
+    ],
+    useCases: [
+      'Giao brief cho cộng tác viên viết bài mà không phải soạn tay.',
+      'Lập lịch nội dung 3–6 tháng cho một chủ đề lớn.',
+      'Chuẩn hóa cấu trúc bài viết trong cả team.',
+    ],
+    steps: [
+      { title: 'Nhập từ khóa gốc', detail: 'Từ khóa này sẽ trở thành trang trụ cột (pillar).' },
+      { title: 'Lấy / dán từ khóa', detail: 'Công cụ gom cụm rồi dựng kế hoạch từ các cụm đó.' },
+      { title: 'Xem tab Kế hoạch', detail: 'Mỗi dòng là một trang cần tạo, kèm loại trang và intent.' },
+      { title: 'Tải content brief', detail: 'Chọn cụm, xem dàn ý và tải file .md giao cho người viết.' },
+    ],
+    body: [
+      'Mô hình pillar – cluster là cách tổ chức nội dung được dùng phổ biến nhất hiện nay: một trang trụ cột bao quát chủ đề lớn, liên kết tới các bài con đi sâu từng khía cạnh, và các bài con trỏ ngược về trang trụ cột. Cấu trúc này giúp công cụ tìm kiếm hiểu website của bạn có chiều sâu về một chủ đề.',
+      'Công cụ tự chọn trang trụ cột theo từ khóa gốc bạn nhập, rồi biến mỗi cụm từ khóa thành một trang con với tiêu đề và loại trang phù hợp với ý định tìm kiếm của cụm đó.',
+      'Content brief được sinh theo quy tắc, không phải nội dung viết sẵn: nó cho bạn khung tiêu đề, câu hỏi cần trả lời, từ khóa phụ và entity nên nhắc tới. Phần viết vẫn cần con người — đó cũng là thứ Google đánh giá cao.',
+    ],
+    related: ['gom-nhom-tu-khoa-hang-loat', 'ban-do-tu-khoa', 'cau-hoi-tu-khoa'],
+    faq: [
+      {
+        question: 'Công cụ có viết bài hộ không?',
+        answer:
+          'Không. Công cụ tạo khung: tiêu đề, dàn ý, từ khóa phụ và câu hỏi cần trả lời. Nội dung vẫn do bạn viết để đảm bảo chất lượng và tính khác biệt.',
+      },
+      {
+        question: 'Độ dài bài đề xuất tính thế nào?',
+        answer:
+          'Dựa trên loại trang và số từ khóa trong cụm. Đây là khoảng tham khảo, không phải mục tiêu bắt buộc — nội dung đủ ý luôn quan trọng hơn số từ.',
+      },
+      {
+        question: 'Brief có xuất được file không?',
+        answer: 'Có. Bạn tải về dạng Markdown (.md) để dán vào Google Docs, Notion hoặc CMS.',
+      },
+    ],
+    defaultSources: ['google', 'youtube'],
+    tool: 'plan',
+  },
+  {
+    slug: 'cau-hoi-tu-khoa',
+    title: 'Công cụ tìm câu hỏi theo từ khóa (Question Generator) tiếng Việt',
+    description:
+      'Tìm các câu hỏi người dùng thật sự tìm kiếm: là gì, có nên, tại sao, bao nhiêu, ở đâu, khi nào… Dùng làm H2/H3 và mục FAQ có schema. Miễn phí.',
+    eyebrow: 'QUESTION GENERATOR',
+    heading: 'Tìm câu hỏi quanh một từ khóa',
+    intro:
+      'Nhập một chủ đề, công cụ trả về các câu hỏi thường gặp nhóm theo dạng: định nghĩa, cách làm, lựa chọn, chi phí, thời điểm — nguyên liệu sẵn sàng cho phần FAQ và tiêu đề phụ.',
+    platform: 'google',
+    keywords: [
+      'tìm câu hỏi từ khóa',
+      'question keyword tool',
+      'câu hỏi thường gặp seo',
+      'answer the public tiếng việt',
+      'faq schema từ khóa',
+    ],
+    bullets: [
+      'Lấy câu hỏi thật từ Google Autocomplete với nhiều tiền tố và hậu tố tiếng Việt.',
+      'Nhóm sẵn theo dạng câu hỏi để dựng dàn ý nhanh.',
+      'Chép nhanh hoặc tải .txt để đưa vào brief.',
+    ],
+    useCases: [
+      'Viết phần FAQ có schema để tăng cơ hội hiển thị nổi bật.',
+      'Bổ sung H2/H3 cho bài viết đang thiếu chiều sâu.',
+      'Tìm ý tưởng landing page dạng câu hỏi long-tail.',
+    ],
+    steps: [
+      { title: 'Nhập chủ đề', detail: 'Ví dụ “trồng cây”, “máy lọc nước”, “vay tín chấp”.' },
+      { title: 'Xem theo nhóm', detail: 'Câu hỏi được chia theo dạng: là gì, cách làm, có nên, bao nhiêu, ở đâu.' },
+      { title: 'Chọn câu hỏi phù hợp', detail: 'Ưu tiên câu hỏi đúng ý định của trang bạn đang viết.' },
+      { title: 'Đưa vào bài', detail: 'Dùng làm H2/H3 hoặc mục FAQ kèm FAQPage schema.' },
+    ],
+    body: [
+      'Câu hỏi là dạng truy vấn dễ cạnh tranh nhất với website mới: chúng dài, cụ thể và thường ít đối thủ tối ưu nghiêm túc. Một bài viết trả lời trọn vẹn nhóm câu hỏi quanh chủ đề của bạn cũng có cơ hội cao xuất hiện ở đoạn trích nổi bật.',
+      'Công cụ mở rộng từ khóa gốc bằng các tiền tố và hậu tố nghi vấn tiếng Việt rồi truy vấn Google Autocomplete, nên kết quả phản ánh những gì người dùng đang thực sự gõ chứ không phải danh sách tĩnh.',
+      'Khi Autocomplete không phản hồi, công cụ vẫn trả về bộ câu hỏi mẫu để bạn không bị gián đoạn công việc — bộ mẫu được ghi rõ trong phần ghi chú kết quả.',
+    ],
+    related: ['ke-hoach-noi-dung', 'cong-cu-nghien-cuu-tu-khoa', 'phan-loai-search-intent'],
+    faq: [
+      {
+        question: 'Câu hỏi lấy từ đâu?',
+        answer:
+          'Từ Google Autocomplete với nhiều biến thể tiền tố/hậu tố nghi vấn tiếng Việt, bổ sung thêm bộ mẫu khi Autocomplete không trả kết quả.',
+      },
+      {
+        question: 'Có nên tạo một trang riêng cho mỗi câu hỏi?',
+        answer:
+          'Không nên tạo hàng loạt trang mỏng. Hãy gom các câu hỏi cùng ý định vào một bài đủ sâu, chỉ tách trang riêng khi câu hỏi đó có nhu cầu đủ lớn và nội dung thực sự khác biệt.',
+      },
+    ],
+    defaultSources: ['google'],
+    tool: 'questions',
   },
 ];
 

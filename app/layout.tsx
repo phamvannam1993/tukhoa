@@ -100,7 +100,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <nav className="mainNav" aria-label="Điều hướng chính">
               <Link className="navHideSm" href="/goi-y-tu-khoa-google">Google</Link>
               <Link className="navHideSm" href="/goi-y-tu-khoa-youtube">YouTube</Link>
-              <Link className="navHideSm" href="/phan-loai-search-intent">Search intent</Link>
+              <Link className="navHideSm" href="/gom-nhom-tu-khoa-hang-loat">Gom nhóm</Link>
+              <Link className="navHideSm" href="/ke-hoach-noi-dung">Kế hoạch nội dung</Link>
               <Link href="/kien-thuc">Kiến thức</Link>
               <Link className="navHideSm" href="/huong-dan-nghien-cuu-tu-khoa">Hướng dẫn</Link>
               <Link className="navCta" href="/cong-cu-nghien-cuu-tu-khoa">Mở công cụ</Link>

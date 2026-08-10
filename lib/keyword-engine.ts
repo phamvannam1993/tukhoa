@@ -42,14 +42,14 @@ export function normalizeKeyword(value: string): string {
     .toLocaleLowerCase('vi');
 }
 
-function tokenize(value: string): string[] {
+export function tokenize(value: string): string[] {
   return normalizeKeyword(value)
     .replace(/[^\p{L}\p{N}\s]/gu, ' ')
     .split(/\s+/)
     .filter((token) => token.length > 1 && !STOP_WORDS.has(token));
 }
 
-function classifyIntent(keyword: string): SearchIntent {
+export function classifyIntent(keyword: string): SearchIntent {
   const normalized = normalizeKeyword(keyword);
 
   for (const group of INTENT_PATTERNS) {

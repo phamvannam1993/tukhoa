@@ -519,3 +519,154 @@ tbody tr:hover .copyBtn { opacity: 1; }
   .footerBottom { flex-direction: column; }
   .ctaBand { padding: 28px 22px; }
 }
+
+/* ===== Workbench: clustering, universe, content plan, brief ===== */
+
+.bulkInput {
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  background: var(--white);
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 180px;
+}
+.bulkInput:focus { outline: none; border-color: var(--green-2); box-shadow: 0 0 0 4px var(--ring); }
+
+.tabRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 20px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
+}
+.tabBtn {
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--white);
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+.tabBtn:hover { background: var(--mint); color: var(--green-dark); }
+.tabBtn.isActive { background: var(--grad-green); border-color: transparent; color: var(--white); }
+
+.clusterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.clusterCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+.clusterCard header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.clusterCard h3 { font-size: 16px; margin: 0; color: var(--ink); }
+.clusterCount {
+  flex: none;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green-dark);
+  background: var(--mint);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.clusterCard .secondaryButton { margin-top: auto; }
+.clusterKeywords { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.clusterKeywords li { font-size: 14px; color: var(--muted); padding-left: 14px; position: relative; }
+.clusterKeywords li::before { content: '·'; position: absolute; left: 4px; color: var(--green-2); font-weight: 700; }
+.uniMore { font-style: italic; color: var(--soft); }
+
+.universeWrap {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--white);
+  overflow-x: auto;
+}
+.uniList { list-style: none; margin: 0; padding-left: 0; }
+.uniList .uniList { padding-left: 20px; border-left: 1px dashed var(--line-strong); margin-left: 8px; }
+.uniNode { margin: 3px 0; }
+.uniLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+.uniLabel:hover { background: var(--mint); }
+.uniNode[data-depth="0"] > .uniLabel { font-size: 17px; color: var(--green-dark); }
+.uniCaret { color: var(--green-2); width: 12px; }
+.uniCount {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green-dark);
+  background: var(--mint-2);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.uniLeafList { list-style: none; margin: 2px 0 8px; padding-left: 32px; display: grid; gap: 4px; }
+.uniLeafList li { font-size: 14px; color: var(--muted); }
+
+.briefWrap { display: grid; gap: 18px; }
+.briefGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.briefCard {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+.briefCard h3 { margin: 0 0 12px; font-size: 15px; color: var(--green-dark); text-transform: uppercase; letter-spacing: .04em; }
+.briefCard p { margin: 0 0 8px; font-size: 14px; color: var(--muted); line-height: 1.65; }
+.briefCard p strong { color: var(--ink); }
+.outlineList { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.outlineList li { font-size: 14px; color: var(--ink); }
+.outlineList li[data-level="3"] { padding-left: 22px; color: var(--muted); }
+.hTag {
+  display: inline-block;
+  min-width: 26px;
+  margin-right: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--green-dark);
+  background: var(--mint);
+  border-radius: 6px;
+  padding: 2px 5px;
+}
+
+@media (max-width: 720px) {
+  .clusterGrid, .briefGrid { grid-template-columns: 1fr; }
+  .tabRow { overflow-x: auto; flex-wrap: nowrap; }
+}
+
+.tightnessField {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.tightnessField select { font: inherit; }
