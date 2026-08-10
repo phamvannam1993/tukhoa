@@ -46,6 +46,7 @@ Có thể deploy thẳng lên Vercel hoặc VPS Node.js. Vì có API route nên 
 - `/ban-do-tu-khoa` – Keyword Universe dạng cây chủ đề
 - `/ke-hoach-noi-dung` – kế hoạch pillar/cluster + content brief (.md)
 - `/cau-hoi-tu-khoa` – Question Generator
+- `/so-sanh-tu-khoa-doi-thu` – Keyword Gap (so sánh danh sách do người dùng cung cấp)
 - `/huong-dan-nghien-cuu-tu-khoa`
 
 ## Bộ công cụ SEO (giai đoạn 1–2 & một phần giai đoạn 4)
@@ -59,8 +60,15 @@ Có thể deploy thẳng lên Vercel hoặc VPS Node.js. Vì có API route nên 
 - **Question Generator** – `/api/keywords/expand` mở rộng từ khóa bằng tiền tố/hậu tố
   nghi vấn tiếng Việt qua Google Autocomplete, có bộ mẫu dự phòng.
 
+- **Internal Link Suggestion** – tab trong workbench: dán danh sách `url | tiêu đề`,
+  công cụ so khớp token với từng cụm và đề xuất anchor text.
+- **Keyword Gap** – so sánh danh sách từ khóa của bạn với tối đa 2 đối thủ. Dữ liệu do
+  người dùng cung cấp (export GSC/Ahrefs), không crawl SERP.
+- **FAQ schema** – chép JSON-LD `FAQPage` từ danh sách câu hỏi trong content brief.
+
 Chưa làm (cần nguồn dữ liệu ngoài): Keyword Difficulty, SERP Analyzer, Keyword Gap,
-Google Search Console, Rank Tracking. Xem phần “Lưu ý dữ liệu”.
+Google Search Console, Rank Tracking. Keyword Gap ở trên là bản dựa trên danh sách
+người dùng tự cung cấp, không thay thế được phân tích đối thủ tự động. Xem phần “Lưu ý dữ liệu”.
 
 ## Lưu ý dữ liệu
 

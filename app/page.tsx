@@ -15,6 +15,7 @@ const PAGE_ICONS: Record<string, string> = {
   'ban-do-tu-khoa': '🌳',
   'ke-hoach-noi-dung': '🗺️',
   'cau-hoi-tu-khoa': '❓',
+  'so-sanh-tu-khoa-doi-thu': '⚔️',
 };
 
 const HOME_STEPS = [

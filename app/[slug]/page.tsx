@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { KeywordTool } from '../../components/KeywordTool';
+import { KeywordGapTool } from '../../components/KeywordGapTool';
 import { QuestionTool } from '../../components/QuestionTool';
 import { SeoWorkbench } from '../../components/SeoWorkbench';
 import { getSeoPage, SEO_PAGES } from '../../lib/seo-pages';
@@ -138,12 +139,23 @@ export default async function SeoToolPage({ params }: PageProps) {
         </div>
       </section>
 
-      {page.tool === 'questions' ? (
+      {page.tool === 'gap' ? (
+        <KeywordGapTool />
+      ) : page.tool === 'questions' ? (
         <QuestionTool />
-      ) : page.tool === 'cluster' || page.tool === 'universe' || page.tool === 'plan' ? (
+      ) : page.tool === 'cluster' ||
+        page.tool === 'universe' ||
+        page.tool === 'plan' ||
+        page.tool === 'links' ? (
         <SeoWorkbench
           initialTab={
-            page.tool === 'universe' ? 'universe' : page.tool === 'plan' ? 'plan' : 'clusters'
+            page.tool === 'universe'
+              ? 'universe'
+              : page.tool === 'plan'
+                ? 'plan'
+                : page.tool === 'links'
+                  ? 'links'
+                  : 'clusters'
           }
         />
       ) : (

@@ -5,8 +5,12 @@ import type {
   ContentBrief,
   ContentPlanItem,
   ContentType,
+  GapKeyword,
+  GapResult,
+  InternalLinkSuggestion,
   KeywordCluster,
   SearchIntent,
+  SitePage,
   UniverseNode,
 } from './keyword-types';
 
@@ -500,4 +504,152 @@ export function buildContentBrief(
       .map((item) => item.name),
     wordCountTarget,
   };
+}
+
+/* ===== Internal link, keyword gap và FAQ schema ===== */
+
+/** Đọc danh sách trang dạng `url | tiêu đề` (hoặc `url<tab>tiêu đề`) mỗi dòng. */
+export function parseSitePages(raw: string): SitePage[] {
+  const pages: SitePage[] = [];
+  const seen = new Set<string>();
+
+  raw.split(/[\n\r]+/).forEach((line) => {
+    const parts = line.split(/\s*[|\t]\s*/).map((part) => part.trim());
+    if (parts.length === 0 || !parts[0]) return;
+
+    const url = parts[0];
+    const title = parts[1] || url;
+    if (seen.has(url)) return;
+
+    seen.add(url);
+    pages.push({ url, title });
+  });
+
+  return pages;
+}
+
+/**
+ * Gợi ý internal link: so khớp token của tiêu đề trang có sẵn với tên cụm.
+ * Anchor text đề xuất chính là tên cụm — cụ thể và đúng ngữ cảnh hơn “xem thêm”.
+ */
+export function suggestInternalLinks(
+  clusters: KeywordCluster[],
+  pages: SitePage[],
+  perCluster = 3,
+): InternalLinkSuggestion[] {
+  if (pages.length === 0) return [];
+
+  // Chỉ khớp theo tiêu đề. Slug URL tiếng Việt đã mất dấu nên cắt ra những âm tiết
+  // trùng ngẫu nhiên ("danh-gia" → "gia" trùng với "gia đình"), gây khớp sai.
+  const pageTokens = pages.map((page) => ({
+    page,
+    tokens: new Set(
+      tokenize(page.title === page.url ? page.url.replace(/[\/\-_]+/g, ' ') : page.title),
+    ),
+  }));
+
+  // Token có mặt ở hầu hết các cụm (phần lõi của chủ đề) gần như không mang thông tin
+  // phân biệt, nên bị hạ trọng số — nếu không, mọi trang đều "liên quan 90%".
+  const clusterDf = new Map<string, number>();
+  clusters.forEach((cluster) => {
+    new Set(tokenize(cluster.name)).forEach((token) =>
+      clusterDf.set(token, (clusterDf.get(token) || 0) + 1),
+    );
+  });
+  const clusterCount = Math.max(1, clusters.length);
+  const weightOf = (token: string): number =>
+    Math.log(1 + clusterCount / (1 + (clusterDf.get(token) || 0)));
+
+  return clusters.map((cluster) => {
+    const clusterTokens = new Set(
+      cluster.keywords.flatMap((item) => tokenize(item.keyword)),
+    );
+    const nameTokens = new Set(tokenize(cluster.name));
+    const nameWeight = [...nameTokens].reduce((sum, token) => sum + weightOf(token), 0);
+
+    const matches = pageTokens
+      .map(({ page, tokens }) => {
+        let overlap = 0;
+        tokens.forEach((token) => {
+          if (nameTokens.has(token)) overlap += weightOf(token);
+          else if (clusterTokens.has(token)) overlap += weightOf(token) * 0.4;
+        });
+        const score = Math.min(100, Math.round((overlap / Math.max(1e-6, nameWeight)) * 100));
+        return { page, score, anchor: cluster.name };
+      })
+      .filter((match) => match.score >= 45)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, perCluster);
+
+    return { cluster: cluster.name, intent: cluster.intent, matches };
+  });
+}
+
+/**
+ * Keyword gap từ danh sách người dùng tự cung cấp (ví dụ export Search Console
+ * của bạn và của đối thủ). Không crawl SERP nên không có volume hay thứ hạng —
+ * chỉ trả lời đúng một câu hỏi: đối thủ có từ khóa nào mà bạn chưa có.
+ */
+export function compareKeywordSets(mine: string[], competitorLists: string[][]): GapResult {
+  const mineSet = new Set(mine.map(normalizeKeyword).filter(Boolean));
+  const competitorCount = new Map<string, number>();
+
+  competitorLists.forEach((list) => {
+    const unique = new Set(list.map(normalizeKeyword).filter(Boolean));
+    unique.forEach((keyword) =>
+      competitorCount.set(keyword, (competitorCount.get(keyword) || 0) + 1),
+    );
+  });
+
+  const missing: GapKeyword[] = [];
+  const shared: string[] = [];
+
+  competitorCount.forEach((competitors, keyword) => {
+    if (mineSet.has(keyword)) {
+      shared.push(keyword);
+      return;
+    }
+    const intent = classifyIntent(keyword);
+    missing.push({
+      keyword,
+      intent,
+      contentType: suggestContentType(keyword, intent),
+      competitors,
+      isQuestion: isQuestionKeyword(keyword),
+    });
+  });
+
+  missing.sort(
+    (a, b) =>
+      b.competitors - a.competitors ||
+      INTENT_PRIORITY[b.intent] - INTENT_PRIORITY[a.intent] ||
+      a.keyword.localeCompare(b.keyword, 'vi'),
+  );
+
+  return {
+    mineTotal: mineSet.size,
+    competitorTotal: competitorCount.size,
+    missing,
+    shared: shared.sort((a, b) => a.localeCompare(b, 'vi')),
+    exclusive: [...mineSet]
+      .filter((keyword) => !competitorCount.has(keyword))
+      .sort((a, b) => a.localeCompare(b, 'vi')),
+  };
+}
+
+/** JSON-LD FAQPage để dán thẳng vào trang — câu trả lời vẫn cần bạn tự viết. */
+export function buildFaqSchema(questions: string[]): string {
+  return JSON.stringify(
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: questions.map((question) => ({
+        '@type': 'Question',
+        name: question,
+        acceptedAnswer: { '@type': 'Answer', text: '' },
+      })),
+    },
+    null,
+    2,
+  );
 }

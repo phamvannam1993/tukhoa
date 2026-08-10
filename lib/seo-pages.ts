@@ -28,7 +28,7 @@ export interface SeoPage {
    * Công cụ hiển thị trên trang. Mặc định `keyword` là bộ mở rộng từ khóa cũ;
    * `cluster` / `universe` / `plan` dùng chung workbench nhưng mở sẵn tab tương ứng.
    */
-  tool?: 'keyword' | 'cluster' | 'universe' | 'plan' | 'questions';
+  tool?: 'keyword' | 'cluster' | 'universe' | 'plan' | 'questions' | 'gap' | 'links';
 }
 
 export const SEO_PAGES: SeoPage[] = [
@@ -654,6 +654,66 @@ export const SEO_PAGES: SeoPage[] = [
     ],
     defaultSources: ['google'],
     tool: 'questions',
+  },
+  {
+    slug: 'so-sanh-tu-khoa-doi-thu',
+    title: 'Keyword Gap – so sánh từ khóa với đối thủ, tìm từ khóa còn thiếu',
+    description:
+      'Dán danh sách từ khóa của bạn và của đối thủ để tìm ngay những từ khóa đối thủ đang có mà bạn chưa có, kèm search intent và loại trang nên tạo. Miễn phí.',
+    eyebrow: 'KEYWORD GAP',
+    heading: 'So sánh từ khóa với đối thủ',
+    intro:
+      'Đối thủ đang phủ những truy vấn nào mà website bạn còn bỏ trống? Dán hai danh sách, công cụ chỉ ra khoảng trống và sắp xếp theo mức độ đáng làm trước.',
+    platform: 'all',
+    keywords: [
+      'keyword gap',
+      'so sánh từ khóa đối thủ',
+      'phân tích đối thủ seo',
+      'tìm từ khóa còn thiếu',
+      'content gap analysis',
+    ],
+    bullets: [
+      'So sánh với tối đa 2 đối thủ cùng lúc.',
+      'Ưu tiên từ khóa có ý định thương mại và giao dịch.',
+      'Mỗi từ khóa thiếu đều kèm gợi ý loại trang nên tạo.',
+      'Xuất CSV để đưa vào kế hoạch nội dung.',
+    ],
+    useCases: [
+      'Agency rà soát khoảng trống nội dung cho khách hàng.',
+      'Lập danh sách bài cần viết dựa trên đối thủ trực tiếp.',
+      'Kiểm tra xem đối thủ có đang phủ nhóm truy vấn mua hàng nào bạn bỏ lỡ.',
+    ],
+    steps: [
+      { title: 'Lấy từ khóa của bạn', detail: 'Export từ Google Search Console (Truy vấn) hoặc công cụ bạn đang dùng.' },
+      { title: 'Lấy từ khóa đối thủ', detail: 'Export từ công cụ phân tích đối thủ, hoặc tự liệt kê từ các trang họ đang xếp hạng.' },
+      { title: 'Dán và so sánh', detail: 'Công cụ tính phần giao và phần thiếu, gán ý định cho từng từ khóa.' },
+      { title: 'Lọc theo ý định', detail: 'Bắt đầu từ nhóm thương mại + giao dịch — đây là nhóm ra tiền nhanh nhất.' },
+    ],
+    body: [
+      'Keyword gap trả lời một câu hỏi rất cụ thể: đối thủ đang kiếm traffic từ những truy vấn nào mà bạn chưa hề có nội dung? Đây thường là cách nhanh nhất để tìm việc cần làm, vì nhu cầu đã được chứng minh bởi chính thị trường.',
+      'Công cụ này so sánh trên đúng dữ liệu bạn cung cấp. Nó không crawl SERP và không có volume hay thứ hạng — nghĩa là chất lượng kết quả phụ thuộc vào chất lượng hai danh sách bạn dán vào. Nguồn tốt nhất là export Search Console của bạn và dữ liệu đối thủ từ công cụ trả phí bạn đang có.',
+      'Bù lại, toàn bộ so sánh chạy trong trình duyệt: danh sách từ khóa của khách hàng bạn không được gửi lên bất kỳ máy chủ nào.',
+    ],
+    related: ['gom-nhom-tu-khoa-hang-loat', 'ke-hoach-noi-dung', 'phan-loai-search-intent'],
+    faq: [
+      {
+        question: 'Công cụ có tự lấy từ khóa của đối thủ không?',
+        answer:
+          'Không. Việc đó cần dữ liệu thứ hạng trả phí. Bạn cần tự cung cấp danh sách từ khóa của đối thủ; công cụ lo phần so sánh, phân loại ý định và sắp xếp ưu tiên.',
+      },
+      {
+        question: 'Vì sao không hiển thị volume?',
+        answer:
+          'Vì chúng tôi không có nguồn volume đáng tin và không muốn đưa ra con số tự chế. Thay vào đó, ưu tiên được xếp theo số đối thủ cùng có từ khóa và theo ý định tìm kiếm.',
+      },
+      {
+        question: 'So sánh được bao nhiêu đối thủ?',
+        answer:
+          'Tối đa 2 đối thủ mỗi lần. Từ khóa xuất hiện ở cả hai đối thủ sẽ được xếp lên đầu vì mức độ chắc chắn cao hơn.',
+      },
+    ],
+    defaultSources: ['google'],
+    tool: 'gap',
   },
 ];
 

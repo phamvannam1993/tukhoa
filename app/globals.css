@@ -670,3 +670,13 @@ tbody tr:hover .copyBtn { opacity: 1; }
   color: var(--muted);
 }
 .tightnessField select { font: inherit; }
+
+.gapGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+.gapField { display: grid; gap: 6px; }
+.gapField > span { font-size: 13px; font-weight: 700; color: var(--green-dark); }
+.gapField .bulkInput { margin-top: 0; min-height: 150px; }

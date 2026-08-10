@@ -6,9 +6,12 @@ import {
   MAX_BULK_KEYWORDS,
   buildContentBrief,
   buildContentPlan,
+  buildFaqSchema,
   buildUniverse,
   clusterKeywords,
   parseKeywordList,
+  parseSitePages,
+  suggestInternalLinks,
 } from '../lib/seo-engine';
 import type {
   KeywordCluster,
@@ -24,13 +27,14 @@ const INTENT_LABELS: Record<SearchIntent, string> = {
   local: 'Địa phương',
 };
 
-type TabKey = 'clusters' | 'universe' | 'plan' | 'brief';
+type TabKey = 'clusters' | 'universe' | 'plan' | 'brief' | 'links';
 
 const TABS: Array<{ key: TabKey; label: string }> = [
   { key: 'clusters', label: 'Gom cụm' },
   { key: 'universe', label: 'Cây chủ đề' },
   { key: 'plan', label: 'Kế hoạch nội dung' },
   { key: 'brief', label: 'Content brief' },
+  { key: 'links', label: 'Internal link' },
 ];
 
 const SAMPLE = [
@@ -107,6 +111,8 @@ export function SeoWorkbench({ initialTab = 'clusters' }: { initialTab?: TabKey 
   const [error, setError] = useState('');
   const [note, setNote] = useState('');
   const [tightness, setTightness] = useState(0.45);
+  const [sitePagesRaw, setSitePagesRaw] = useState('');
+  const [copiedSchema, setCopiedSchema] = useState(false);
 
   const parsed = useMemo(() => parseKeywordList(submitted), [submitted]);
 
@@ -132,6 +138,25 @@ export function SeoWorkbench({ initialTab = 'clusters' }: { initialTab?: TabKey 
     const cluster = result.clusters[Math.min(selected, result.clusters.length - 1)];
     return buildContentBrief(cluster, result.clusters);
   }, [result, selected]);
+
+  const linkSuggestions = useMemo(() => {
+    if (!result) return [];
+    const pages = parseSitePages(sitePagesRaw);
+    return suggestInternalLinks(result.clusters, pages).filter(
+      (item) => item.matches.length > 0,
+    );
+  }, [result, sitePagesRaw]);
+
+  async function copyFaqSchema(): Promise<void> {
+    if (!brief) return;
+    try {
+      await navigator.clipboard.writeText(buildFaqSchema(brief.questions));
+      setCopiedSchema(true);
+      setTimeout(() => setCopiedSchema(false), 1400);
+    } catch {
+      /* clipboard may be unavailable */
+    }
+  }
 
   function analyse(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
@@ -421,6 +446,9 @@ export function SeoWorkbench({ initialTab = 'clusters' }: { initialTab?: TabKey 
                 <button type="button" className="secondaryButton" onClick={exportBriefMarkdown}>
                   Tải brief (.md)
                 </button>
+                <button type="button" className="secondaryButton" onClick={copyFaqSchema}>
+                  {copiedSchema ? '✓ Đã chép schema' : 'Chép FAQ schema'}
+                </button>
               </div>
 
               <div className="briefGrid">
@@ -490,6 +518,70 @@ export function SeoWorkbench({ initialTab = 'clusters' }: { initialTab?: TabKey 
                   </ul>
                 </article>
               </div>
+            </div>
+          )}
+          {tab === 'links' && (
+            <div className="briefWrap">
+              <label className="fieldLabel" htmlFor="site-pages">
+                Dán danh sách trang đã có trên website — mỗi dòng một trang, dạng
+                {' '}<code>url | tiêu đề</code>
+              </label>
+              <textarea
+                id="site-pages"
+                className="bulkInput"
+                rows={7}
+                value={sitePagesRaw}
+                onChange={(event) => setSitePagesRaw(event.target.value)}
+                placeholder={'/may-loc-nuoc-gia-dinh | Máy lọc nước gia đình loại nào tốt\n/may-loc-nuoc-karofi | Đánh giá máy lọc nước Karofi'}
+              />
+
+              {sitePagesRaw.trim() === '' ? (
+                <p className="note">
+                  Bạn có thể lấy danh sách này từ sitemap.xml hoặc export Search Console.
+                  Công cụ so khớp tiêu đề trang với từng cụm để gợi ý nên đặt link ở đâu.
+                </p>
+              ) : linkSuggestions.length === 0 ? (
+                <div className="emptyState">
+                  <strong>Chưa tìm được liên kết phù hợp</strong>
+                  Tiêu đề các trang bạn dán chưa đủ gần với cụm từ khóa nào.
+                </div>
+              ) : (
+                <div className="tableWrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Cụm (trang sẽ viết)</th>
+                        <th>Nên link tới trang có sẵn</th>
+                        <th>Anchor text đề xuất</th>
+                        <th>Độ liên quan</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {linkSuggestions.flatMap((item) =>
+                        item.matches.map((match) => (
+                          <tr key={`${item.cluster}-${match.page.url}`}>
+                            <td className="keywordCell">{item.cluster}</td>
+                            <td>
+                              <strong>{match.page.title}</strong>
+                              <br />
+                              <span className="note">{match.page.url}</span>
+                            </td>
+                            <td>{match.anchor}</td>
+                            <td>
+                              <div className="scoreWrap">
+                                <div className="scoreBar">
+                                  <span style={{ width: `${match.score}%` }} />
+                                </div>
+                                <span className="scoreNum">{match.score}</span>
+                              </div>
+                            </td>
+                          </tr>
+                        )),
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           )}
         </div>

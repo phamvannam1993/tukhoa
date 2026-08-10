@@ -94,3 +94,35 @@ export interface ContentBrief {
   internalLinks: string[];
   wordCountTarget: [number, number];
 }
+
+/** Một trang có sẵn trên site, dùng cho gợi ý internal link. */
+export interface SitePage {
+  url: string;
+  title: string;
+}
+
+export interface InternalLinkSuggestion {
+  cluster: string;
+  intent: SearchIntent;
+  matches: Array<{ page: SitePage; score: number; anchor: string }>;
+}
+
+export interface GapKeyword {
+  keyword: string;
+  intent: SearchIntent;
+  contentType: ContentType;
+  /** Số đối thủ đang có từ khóa này. */
+  competitors: number;
+  isQuestion: boolean;
+}
+
+export interface GapResult {
+  mineTotal: number;
+  competitorTotal: number;
+  /** Đối thủ có, bạn chưa có. */
+  missing: GapKeyword[];
+  /** Cả hai cùng có. */
+  shared: string[];
+  /** Chỉ bạn có. */
+  exclusive: string[];
+}
