@@ -5,6 +5,7 @@ import { Be_Vietnam_Pro } from 'next/font/google';
 import './globals.css';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '../lib/site';
 import { SEO_PAGES } from '../lib/seo-pages';
+import { INDUSTRY_LIST } from '../lib/keyword-seed';
 
 const beVietnam = Be_Vietnam_Pro({
   subsets: ['latin', 'vietnamese'],
@@ -79,6 +80,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const gaId = process.env.NEXT_PUBLIC_GA_ID ?? 'G-31VVXCJ29R';
   const platformTools = SEO_PAGES.filter((p) => p.slug.startsWith('goi-y-'));
   const workflowTools = SEO_PAGES.filter((p) => !p.slug.startsWith('goi-y-'));
+  const industries = INDUSTRY_LIST.slice(0, 10);
 
   return (
     <html lang="vi" className={beVietnam.variable}>
@@ -98,8 +100,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <span>TừKhóa.vn</span>
             </Link>
             <nav className="mainNav" aria-label="Điều hướng chính">
+              <Link className="navHideSm" href="/tu-khoa-nganh">Từ khóa theo ngành</Link>
               <Link className="navHideSm" href="/goi-y-tu-khoa-google">Google</Link>
-              <Link className="navHideSm" href="/goi-y-tu-khoa-youtube">YouTube</Link>
               <Link className="navHideSm" href="/gom-nhom-tu-khoa-hang-loat">Gom nhóm</Link>
               <Link className="navHideSm" href="/ke-hoach-noi-dung">Kế hoạch nội dung</Link>
               <Link href="/kien-thuc">Kiến thức</Link>
@@ -131,6 +133,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <h4>Phân tích</h4>
                 {workflowTools.map((p) => (
                   <Link key={p.slug} href={`/${p.slug}`}>{p.heading}</Link>
+                ))}
+              </div>
+              <div className="footerCol">
+                <h4>Từ khóa theo ngành</h4>
+                <Link href="/tu-khoa-nganh">Tất cả các ngành</Link>
+                {industries.map((ind) => (
+                  <Link key={ind.slug} href={`/tu-khoa-nganh/${ind.slug}`}>{ind.name}</Link>
                 ))}
               </div>
               <div className="footerCol">

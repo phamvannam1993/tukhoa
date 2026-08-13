@@ -680,3 +680,101 @@ tbody tr:hover .copyBtn { opacity: 1; }
 .gapField { display: grid; gap: 6px; }
 .gapField > span { font-size: 13px; font-weight: 700; color: var(--green-dark); }
 .gapField .bulkInput { margin-top: 0; min-height: 150px; }
+
+/* ===== Landing từ khóa: /keyword, /long-tail, /cau-hoi, /tu-khoa-nganh ===== */
+
+.kwMetaRow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 18px; }
+.intentBadge { display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 750; }
+.kwCount { color: var(--soft); font-size: 13px; font-weight: 700; }
+
+.kwFamily { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 26px; }
+.kwFamCard {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 16px 18px; border: 1px solid var(--line); border-radius: 16px;
+  background: rgba(255,255,255,.7); transition: border-color .15s, transform .15s, box-shadow .15s;
+}
+.kwFamCard:hover { border-color: var(--green-2); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.kwFamCard span { color: var(--soft); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
+.kwFamCard strong { color: var(--ink); font-size: 16px; }
+.kwFamCard.active { background: var(--mint); border-color: var(--green-2); }
+.kwFamCard.active strong { color: var(--green-dark); }
+
+.chipList { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.kwChip {
+  padding: 8px 14px; border: 1px solid var(--line-strong); border-radius: 999px;
+  background: var(--cream-2); color: var(--ink); font-size: 14.5px; font-weight: 600;
+}
+
+.kwLongList { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.kwLongList li {
+  padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px;
+  background: rgba(255,255,255,.6); color: var(--ink); font-size: 15.5px; font-weight: 550;
+}
+ol.kwLongList { counter-reset: kw; }
+ol.kwLongList.numbered li { display: flex; gap: 12px; align-items: baseline; }
+ol.kwLongList.numbered li::before {
+  counter-increment: kw; content: counter(kw);
+  color: var(--green-2); font-weight: 850; font-size: 13px; min-width: 20px;
+}
+
+.kwQaList { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.kwQaList li {
+  padding: 12px 16px 12px 40px; border: 1px solid var(--line); border-radius: 12px;
+  background: rgba(255,255,255,.6); color: var(--ink); font-size: 15.5px; font-weight: 600;
+  position: relative;
+}
+.kwQaList li::before {
+  content: "?"; position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 18px; height: 18px; display: grid; place-items: center; border-radius: 50%;
+  background: var(--mint-2); color: var(--green-dark); font-size: 12px; font-weight: 850;
+}
+
+.titleList { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.titleList li {
+  padding: 14px 16px; border-left: 3px solid var(--green-2); border-radius: 0 12px 12px 0;
+  background: var(--mint); color: var(--green-dark); font-size: 15.5px; font-weight: 650;
+}
+
+.seeAllLink { display: inline-block; margin-top: 16px; color: var(--green); font-weight: 750; font-size: 15px; }
+.seeAllLink:hover { color: var(--green-dark); }
+.backLine { padding: 8px 0 40px; }
+.backLine a { color: var(--soft); font-weight: 700; font-size: 14px; }
+.backLine a:hover { color: var(--green); }
+
+/* Hub ngành */
+.industryGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 24px 0 56px; }
+.industryCard {
+  padding: 22px 22px 20px; border: 1px solid var(--line); border-radius: 18px;
+  background: rgba(255,255,255,.72); box-shadow: var(--shadow-sm);
+}
+.industryCardHead { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.industryCardHead h2 { font-size: 20px; margin: 0; }
+.industryCardHead h2 a { color: var(--ink); }
+.industryCardHead h2 a:hover { color: var(--green); }
+.industryCount { color: var(--soft); font-size: 12.5px; font-weight: 700; white-space: nowrap; }
+.industryKw { margin: 14px 0 4px; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.industryKw li a {
+  display: inline-block; padding: 5px 11px; border: 1px solid var(--line-strong); border-radius: 999px;
+  background: var(--cream-2); color: var(--muted); font-size: 13px; font-weight: 600;
+}
+.industryKw li a:hover { border-color: var(--green-2); color: var(--green-dark); }
+
+/* Danh sách seed trong 1 ngành */
+.seedGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.seedCard {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.6);
+}
+.seedMain { color: var(--ink); font-size: 16px; font-weight: 750; }
+.seedMain:hover { color: var(--green); }
+.seedSub { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.seedSub a { color: var(--soft); font-weight: 650; }
+.seedSub a:hover { color: var(--green); }
+.seedSub span { color: var(--line-strong); }
+
+@media (max-width: 960px) {
+  .kwFamily, .industryGrid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 680px) {
+  .kwFamily, .industryGrid, .seedGrid { grid-template-columns: 1fr; }
+}
